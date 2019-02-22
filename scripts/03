@@ -1,0 +1,126 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    03                                                 :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: dgorold- <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/02/13 14:52:20 by dgorold-          #+#    #+#              #
+#    Updated: 2019/02/22 13:56:08 by dgorold-         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+#!/bin/bash
+
+echo "Do you want play with me in 21?"
+declare -a cards=( "6" "7" "8" "9" "10"
+                  "6" "7" "8" "9" "10"
+                  "6" "7" "8" "9" "10"
+                  "6" "7" "8" "9" "10"
+                  "2" "3" "4" "11"
+                  "2" "3" "4" "11"
+                  "2" "3" "4" "11"
+                  "2" "3" "4" "11" )
+declare -a bookm=()
+declare -a player=()
+len=36
+header=" %-12s %2s %2s %2s %2s %2s      |\n"
+menu="Please enter your choice: "
+options=( "yes" "no" )
+var="0"
+select opt in "${options[@]}"
+do
+        case $opt in
+                yes )
+                        var="1"
+                        break
+                        ;;
+                no  )
+                        echo "Good buy!"
+                        break
+                        ;;
+                * ) echo "You should write 1 or 2"
+                        ;;
+        esac
+done
+game=("Get card" "Enough")
+if [ $var == "1" ]
+then
+
+nbr_p=$(( $RANDOM % $len-1 ))
+player+=(${cards[$nbr_p]})
+unset cards[$nbr_p]
+len=$len-1
+nbr_b=$(( $RANDOM % $len-1 ))
+bookm+=(${cards[$nbr_b]})
+unset cards[$nbr_b]
+len=$len-1
+echo " .________________________________."
+echo " |                                |"
+printf "$header" "| player:" "${player[@]}"
+echo " |                                |"
+echo " | Bookmaker cards: 1             |"
+echo " |________________________________|"
+cnt=1
+var2=1
+        while :
+        do
+                str="0"
+                read -p "One more card? [yes or no] : " variant
+                if [[ $variant == "yes" ]]
+                then
+                        nbr_p=$(( $RANDOM % $len-1 ))
+                        player+=(${cards[$nbr_p]})
+                        unset cards[$nbr_p]
+                        len=$len-1
+                else
+                        echo " .________________________________."
+                        echo " |                                |"
+                        printf "$header" "| player:" "${player[@]}"
+                        echo " |                                |"
+                        printf "$header" "| Bookmaker:" "${bookm[@]}"
+                        echo " |________________________________|"
+                        echo "Open up!"
+                        break
+                fi
+                if [ $var -eq "1" ]; then
+                        nbr_b=$(( $RANDOM % $len-1 ))
+                        bookm+=(${cards[$nbr_b]})
+                        unset cards[$nbr_b]
+                        cnt=$cnt+1
+                        len=$len-1
+                fi
+                echo " .________________________________."
+                echo " |                                |"
+                printf "$header" "| player:" "${player[@]}"
+                echo " |                                |"
+                echo " | Bookmaker cards:  $(( $cnt | bc ))            |"
+                echo " |________________________________|"
+                for elem in ${bookm[@]}; do
+                        str=$str+$elem
+                done
+                sum="$printf ""$(( $str | bc ))"
+                if [ $sum -eq "21" ]; then # var1 == var2
+                        echo "Bookmaker: 21 - I won!"
+                        echo " .________________________________."
+                        echo " |                                |"
+                        printf "$header" "| Bookmaker:" "${bookm[@]}"
+                        echo " |________________________________|"
+                        break
+                elif [ $sum -gt "21" ]; then #if var1 > var2
+                        echo "Bookmaker: 'I lost!'"
+                        echo " .________________________________."
+                        echo " |                                |"
+                        printf "$header" "| Bookmaker:" "${bookm[@]}"
+                        echo " |________________________________|"
+                        break
+                elif (( $sum < "18" )); then #if var1 < var2
+                        echo "Bookmaker: I need another card"
+                else
+                        if [ $var -eq "1" ]; then
+                                var="0"
+                                echo "Bookmaker: 'I dont need cards anymore!'"
+                        fi
+                fi
+	done
+fi

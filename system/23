@@ -1,0 +1,1 @@
+We can connected to VM by command - "ssh -i rsa_key.pub user@address_of_VM"

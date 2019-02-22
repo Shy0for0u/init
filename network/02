@@ -1,0 +1,9 @@
+VAL="$(ifconfig en0 | grep broadcast | rev | cut -d ' ' -f 1 | rev)"
+
+echo "$VAL"
+
+SUBNET="$(echo $VAL | sed 's/\./d/3' | cut -d d -f 1)"
+
+ping -c 1 $VAL >  nul #/etc/null
+
+arp -a | grep -o $SUBNET.* | cut -d \) -f 1  

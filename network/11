@@ -1,0 +1,12 @@
+#get my local ip address
+#IP="$(networksetup -getinfo Ethernet | grep 'IP address' | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}')"
+#get our local network
+#l_nw="$(echo "$IP" | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.')"
+#echo "$l_nw"
+#get internal local network
+#subnet="$(echo "$IP" | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.')"
+#echo "$IP"
+#echo "$subnet"
+#name and (IP address)
+#sh 10 | grep -v '192.168.20' | grep -o '192.168.[0-9]\{1,3\}\.[0-9]\{1,3\} .192.168.[0-9]\{1,3\}\.[0-9]\{1,3\}.'
+name: 192.168.2.9 IP: 192.168.2.9

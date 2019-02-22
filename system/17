@@ -1,0 +1,1 @@
+ssh -i ssh-file pasha@192.168.21.229

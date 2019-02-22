@@ -1,0 +1,12 @@
+if [ $# != 1 ]
+	then
+	echo "Usage: $0 [<user-name-for-delete>]"
+else
+	if pgrep -u $1 > /etc/null
+		then
+		pkill -9 -u $1
+		deluser --force $1
+	else
+		echo "User in not ACTIVE!"
+	fi
+fi

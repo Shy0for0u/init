@@ -1,0 +1,4 @@
+#format of /etc/hosts:
+#Add string 46.19.122.85  intra.42.fr
+#clean cache of DNS
+#sudo killall -HUP mDNSResponder;say DNS cache has been flushed

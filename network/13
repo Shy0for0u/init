@@ -1,0 +1,2 @@
+#nslookup $(sh 12) | grep name | cut -d '=' -f 2 | cut -d ' ' -f 2
+e1r5p1.21-school.ru.
